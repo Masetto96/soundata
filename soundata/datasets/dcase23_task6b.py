@@ -246,6 +246,15 @@ class Clip(core.Clip):
             * str - Manufacturer name.
         """
         return self._clip_metadata.get("manufacturer")
+    
+    @property
+    def split(self):
+        """Split.
+
+        Returns:
+            * str - .
+        """
+        return self._clip_metadata.get("split")
 
     @property
     def license(self):
@@ -318,14 +327,19 @@ class Dataset(core.Dataset):
                 csv_reader = csv.DictReader(csv_file, delimiter=",")
                 for row in csv_reader:
                     file_key = row["file_name"].replace(".wav", "")
+                    split = ""
                     if "development" in file_name:
                         file_key = "development/" + file_key
+                        split = "dev"
                     elif "validation" in file_name:
                         file_key = "validation/" + file_key
+                        split = "val"
                     elif "evaluation" in file_name:
                         file_key = "evaluation/" + file_key
+                        split = "eval"
                     elif "retrieval" in file_name:
                         file_key = "test/" + file_key
+                        split = "test"
                     if file_key not in combined_data:
                         combined_data[file_key] = {
                             "file_name": "",
@@ -336,11 +350,13 @@ class Dataset(core.Dataset):
                             "manufacturer": "",
                             "license": "",
                             "captions": [],
+                            "split": split,
                         }
                     if file_type == "metadata":
                         combined_data[file_key].update(
                             {
                                 "file_name": file_key,
+                                "split": split,
                                 "keywords": row["keywords"],
                                 "sound_id": row["sound_id"],
                                 "sound_link": row["sound_link"],
