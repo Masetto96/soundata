@@ -233,6 +233,15 @@ class Clip(core.Clip):
         return self._clip_metadata.get("captions")
     
     @property
+    def split(self):
+        """Subset of the dataset the clip belongs to: dev, val, eval, test.
+
+        Returns:
+            * str - split
+        """
+        return self._clip_metadata.get("split")
+    
+    @property
     def start_end_samples(self):
         """Start and end samples in the audio file.
 
