@@ -249,12 +249,21 @@ class Clip(core.Clip):
     
     @property
     def split(self):
-        """Split.
+        """Subset of the dataset the clip belongs to: dev, val, eval, test.
 
         Returns:
-            * str - .
+            * str - split
         """
         return self._clip_metadata.get("split")
+    
+    @property
+    def captions(self):
+        """Captions Annotations, 8 to 20 words long.
+
+        Returns:
+            * List[str] - captions
+        """
+        return self._clip_metadata.get("captions")
 
     @property
     def license(self):

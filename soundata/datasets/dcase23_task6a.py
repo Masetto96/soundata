@@ -223,6 +223,15 @@ class Clip(core.Clip):
         """
         return self._clip_metadata.get("sound_link")
 
+    @property       
+    def captions(self):
+        """Captions Annotations, 8 to 20 words long.
+
+        Returns:
+            * List[str] - captions
+        """
+        return self._clip_metadata.get("captions")
+    
     @property
     def start_end_samples(self):
         """Start and end samples in the audio file.
@@ -329,6 +338,7 @@ class Dataset(core.Dataset):
                             "manufacturer": "",
                             "license": "",
                             "captions": [],
+                            "split" : "",
                         }
                     if file_type == "metadata":
                         combined_data[file_key].update(
@@ -342,6 +352,7 @@ class Dataset(core.Dataset):
                                 "start_end_samples": row["start_end_samples"],
                                 "manufacturer": row["manufacturer"],
                                 "license": row["license"],
+                                "split" : dataset_type,
                             }
                         )
                     elif file_type == "test_metadata":
@@ -351,6 +362,7 @@ class Dataset(core.Dataset):
                                 "start_end_samples": row["start_end_samples"],
                                 "manufacturer": row["manufacturer"],
                                 "license": row["license"],
+                                "split" : dataset_type,
                             }
                         )
                     elif file_type == "captions":
